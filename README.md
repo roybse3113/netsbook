@@ -76,22 +76,27 @@ Netsbook is our group G20’s implementation of a “mini-Facebook” applicatio
 ## Screenshots of Application
 
 ### Sign-in Page
+![image](https://github.com/roybse3113/netsbook/assets/79131282/ddc961b1-731a-413f-8168-ea52dc53d764)
 
 ### Sign-up Page
+![image](https://github.com/roybse3113/netsbook/assets/79131282/0cc73aa5-b130-406a-bab4-9b6e335c8dd0)
 
 ### Home Page
-
-### Profile Page
-
-### Friends Page
+![image](https://github.com/roybse3113/netsbook/assets/79131282/c65208ff-d283-428e-8bec-b52c5cf87609)
 
 ### News Page
+![image](https://github.com/roybse3113/netsbook/assets/79131282/d7d8d59c-c19f-4298-9138-da671eacaf1f)
+![image](https://github.com/roybse3113/netsbook/assets/79131282/fe75f8ba-c0bb-4d56-a0a8-0e7cf5d44546)
 
 ### Friend Visualization
+![image](https://github.com/roybse3113/netsbook/assets/79131282/1bc3da00-6995-4b2b-b0b6-58860caaa9db)
 
 ### Chat Page
+![image](https://github.com/roybse3113/netsbook/assets/79131282/381a596b-ac4c-4a7c-b417-e6effb42c30b)
 
 ### Chat Room Page
+![image](https://github.com/roybse3113/netsbook/assets/79131282/541df346-be2f-4f0f-8574-ab080d4dc213)
 
 ### Profile Update Page
+![image](https://github.com/roybse3113/netsbook/assets/79131282/490da62a-8fd2-4e01-9c69-3e15730661bf)
 
