@@ -1,4 +1,4 @@
-# netsbook
+# NetsBook: Mini-Facebook Application
 
 ## Overview
 Netsbook is our group G20’s implementation of a “mini-Facebook” application for the NETS2120 final project. NetsBook incorporates most of the key features of Facebook including: a login/signup page, personalized news feed that shows users the most relevant and interesting content from their friends and pages they follow; the ability to share a variety of different types of content, including text, images, and links; a messaging system that allows users to communicate privately with their friends, family, and larger groups; a detailed and interactive friend visualizer; and a page for news and articles.
@@ -72,3 +72,26 @@ Netsbook is our group G20’s implementation of a “mini-Facebook” applicatio
 - Created onScroll listener to detect when user scrolls
 - Threshold variable to determine if ready to loadMoreContent()
 - Loader-circle that appears when loading and disappears when loading has completed
+
+## Screenshots of Application
+
+### Sign-in Page
+
+### Sign-up Page
+
+### Home Page
+
+### Profile Page
+
+### Friends Page
+
+### News Page
+
+### Friend Visualization
+
+### Chat Page
+
+### Chat Room Page
+
+### Profile Update Page
+
