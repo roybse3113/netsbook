@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <style type="text/css">
+            .container {
+            font-family: Arial, Verdana, Helvetica, sans-serif;
+            margin: auto;
+            background-color: rgb(182, 205, 224);
+            }
+        </style>
+    </head> 
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="/socket.io/socket.io.js"> </script>
+<script type="text/javascript">
+        <!--
+    var socket = io();
+    
+    var username = <%- JSON.stringify(username) %> 
+    socket.emit('online', username);
+    // get room_id from chat_routes.js
+    console.log("Frontend print");
+
+    var roomID = <%- JSON.stringify(room_id)%> 
+
+    var jsUserList = <%- JSON.stringify(userList)%> 
+    
+
+    console.log("Room ID" + JSON.stringify(roomID));
+    // Socket: join this room
+    socket.emit('join', {room: roomID});
+    
+    var sendChat = function() {
+        if ($('#messageInput').val().trim() !== ''){
+            socket.emit('chat message', {
+                text: $('#messageInput').val().trim(),
+                // sender is always 1 person, get the current session's username, not chat_room.ejs's username
+                // chat_room.ejs's username is got by whoever openned chat_room.ejs last from joinChatRoom
+                sender: username,
+                room: roomID
+            });
+            // post chat to chat table, post table, user table
+            // call ajax function to add message to chat table
+            var id = Date.now();
+            var msgTableData = {
+                chat_id: id, 
+                text: $('#messageInput').val().trim(), 
+                sender: username 
+            }
+            var msgRoomTableData = {
+                room_id: roomID,
+                chat_id: id
+            }
+            addMSGTable(msgTableData);
+            addMSGRoomTable(msgRoomTableData);
+            console.log("chat sent");
+            $('#messageInput').val('');
+            $('#messageInput').focus();
+        }
+    }
+
+    var addMSGTable = function(msgTableData) {
+        $.post('/addMSGTable', msgTableData, function(response){
+                console.log("AJAX addMSGTABLE response: " + response);
+            })
+    }
+
+    var addMSGRoomTable = function(msgRoomTableData) {
+        $.post('/addMSGRoomTable', msgRoomTableData, function(response){
+                console.log("AJAX addMSGRoomTABLE response: " +response);
+            })
+    }
+
+    // Handle receving a message from socket
+    // Add it to chatroom HTML as a list item in ul (unordered list)
+    $(document).ready(function() {
+        socket.on('chat message', function(msg){
+            console.log(msg);
+            console.log(msg.room);
+            var tempMessage = document.createElement("li");
+            // add chat color after multiple-person chat room is enabled
+            // if (username === msg.sender){
+            //     tempMessage.setAttribute("class", "me");
+            // } else {
+            //     tempMessage.setAttribute("class", "other");
+            // }
+            tempMessage.appendChild(document.createTextNode(msg.sender + ": " + msg.text));
+            $('#messages').append(tempMessage);
+            $('#messages').animate({
+                scrollTop: $('#messages').get(0).scrollHeight
+            }, 0);
+        });
+
+        socket.on('invite user', function(obj){
+            console.log("Socket Received: invite user");
+            console.log(obj.invited);
+            var tempUser = document.createElement("li");
+
+            tempUser.appendChild(document.createTextNode(obj.invited));
+            $('#usersList').append(tempUser);
+            var children = document.getElementById("friendsList").children;
+            for (var i = 0; i < children.length; i++) {
+                console.log("child " + i);
+                console.log(children[i]);
+            }
+
+            console.log("id exists? " + document.getElementById("scott"));
+            console.log("id exists? " + document.getElementById(obj.invited));
+            $('#' + obj.invited).remove();
+            $('#' + obj.invited).html = "";
+        })
+    })
+    window.onload = function(){
+        console.log("id exists? " + document.getElementById("scott"));
+    }
+    var inviteUser = function (invitedUser) {
+        var inviteUserData = {invited: invitedUser, roomID: roomID};
+            console.log("inviteUserData in chat_romo.ejs function " + JSON.stringify(inviteUserData));
+            $.post('/inviteUserToCurrRoom', inviteUserData, function(response){
+                console.log("inviteUser ajax function success");
+                socket.emit('invite user', {requester: username, invited: invitedUser, room: roomID});
+            })
+    }
+
+    // var createGroupChatRoute = function(invitedUser) {
+    //     var cleanUserList = [];
+    //     console.log(JSON.stringify(jsUserList));
+    //     for (let i = 0; i < jsUserList.length; i++){
+    //         cleanUserList.push(jsUserList[i].S);
+    //         console.log(jsUserList[i].S);
+    //     }
+    //     cleanUserList.push(invitedUser);
+    //     console.log(cleanUserList);
+    //     const body = {
+    //         users_list: cleanUserList
+    //     };
+    //     fetch('/createGroupChat', {
+    //         method: "POST",
+    //         body: JSON.stringify(body)
+    //     })
+        
+    // }
+    
+
+    function leaveRoom(){
+        socket.emit('leave', {room: roomID});
+    }
+-->
+</script>
+<% if(profilePicture != null){ %>
+    <img class="img-fluid img-thumbnail" alt="Image" width="150" height="150"
+     src="<%=profilePicture %>"> 
+  <% }  %>
+<body class="container">
+    <h1>Current User: <%= username  %></h1>
+    <h2>Chat Room <%= room_id %></h2>
+    <h2>Users in Chat Room </h2>
+    <ul style="list-style-type: none;" id="usersList">
+        <%if (userList != null) { %>
+            <% var userListStrings = [] %>
+            <% userList.forEach(function(user){ %>
+                <% userListStrings.push(user.S) %>
+                <td><%= user.S %></td>
+                <br>
+            <% } )%>
+        <% }%>
+    </ul>
+
+    <h2>Friends To Invite </h2>
+    <ul style="display: grid; gap: 10px 10px; list-style-type: none;" id="friendsList">
+        <%if (friendsList != null) { %>
+            <% var friendsListStrings = []; %>
+            <% friendsList.forEach(function(friendObj){ %>
+                <%  friendsListStrings.push(friendObj.S) %>
+            <% }) %>
+            <% friendsListStrings.forEach(function(friend){ %>
+                <% if ( !userListStrings.includes(friend) ) { %>
+                    <td> <div id="<%= friend %>"><%= friend %>
+                    <br>
+                    <button style="width: 20%; font: 12px" id="inviteUser" type="button" onClick="inviteUser('<%= friend %>')">
+                        Invite to this Room
+                    </button>
+                <% var new_users_list = []; %>
+                <% userListStrings.forEach(function(user) {%>
+                  <% new_users_list.push(user); %>
+                <% }) %>
+                <% new_users_list.push( friend ); %>
+                <!-- action="/createGroupChat" method="post" -->
+                <form action="/createGroupChat" method="post">
+                    <input style="display:none;" id="users_list" name="users_list" value="<%- new_users_list.join(',') %>"  >
+                    <input style="width: 20%" type="submit" value="Create New Room">
+                  </form>
+                </div>
+                </td>
+                <br>
+                <% }%>
+            <% } )%>
+        <% }%>
+    </ul>
+
+<div class="right">
+    <div>
+    <ul style="list-style-type: none;" id="messages">
+        <%if (messagesList != null) { %>
+            <% messagesList.forEach(function(msg){ %>
+                <td><%= msg.sender.S %>: <%= msg.text.S %> </td>
+                <br>
+            <% } )%>
+        <% }%>
+    </ul>
+    </div>
+    <form id="message-form">
+    <div id="form-message">
+        <input class= "form-control" id="messageInput" autocomplete="off" placeholder="type a message..."
+            onfocus="this.placeholder= ''" onblur="this.placeholder = 'type a message...'">
+        <button type="button" id="send-btn" class="btn btn-light" onsubmit="return false;" onclick="return sendChat();"><i
+    class="material-icons" style="font-size:26px;">send</i></button>
+    </div>
+    </form>
+    </div>
+    <br>
+    <a class=h3 href="http://localhost:8080/chat" onclick="leaveRoom()">Leave Room</a>
+</div>
+</body>

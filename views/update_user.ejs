@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <style type="text/css">
+      .container {
+        font-family: Arial, Verdana, Helvetica, sans-serif;
+        margin: auto;
+        background-color: rgb(223,227,238);
+      }
+      nav ul {
+        list-style: none;
+        display: flex;
+        justify-content: space-between;
+      }
+      nav a {
+        text-decoration: none;
+        color: #000;
+      }
+      .inline-block-child {
+          display: inline-block;
+        }
+      .img {
+        width: 50;
+        height: 50;
+        border-radius: 50%;
+      }
+    </style>
+</head>
+<body class="container">
+    <div style="display: inline-block">
+        <h3 style="font-weight: bold; margin-right: 3px;"><a href="/home">Netsbook</a></h3>
+      </div>
+      <div style="display: inline-block">
+        <form autocomplete = "off">
+          <input id = "searchUserInput" style="border-radius: 10px; border-color: white; margin-right: 780px" type = "text" placeholder = "&#128269;Search">
+          <div id = "autofill"></div>
+        </form>
+      </div>
+      <div style="display: inline-block">
+        <% if(profilePicture != null){ %>
+          <img class="img" alt="Image" width="75" height="75"
+          src="<%=profilePicture %>">
+        <% }  %>
+      </div>
+      <br/>
+      <nav>
+        <ul>
+          <li style="font-weight: bold"><a href="/profilePage">Profile</a></li>
+          <li style="font-weight: bold"><a href="/news">What's Happening</a></li>
+          <li style="font-weight: bold"><a href="/chat">Message Friends</a></li>
+          <li style="font-weight: bold"><a href="/visualizer">Friend Visualizer</a></li>
+          <li style="font-weight: bold"><a href="/toUpdateUser">Update Profile</a></li>
+        </ul>
+      </nav>
+  
+      <hr />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="/socket.io/socket.io.js"> </script>
+    <script type="text/javascript">
+    <!--
+    var username = <%- JSON.stringify(username) %>
+    var affiliation = <%- JSON.stringify(affiliation) %>
+    var email = <%- JSON.stringify(email) %>
+    var socket = io();
+    socket.emit('online', username);
+
+
+    var updateAffiliation = function() {
+        console.log("updateAffiliation called");
+        var newAffiliation = $('#affiliation').val().trim();
+        var body = {
+            affiliation: newAffiliation,
+            username: username
+        };
+        if (newAffiliation !== ''){
+            $.ajax({
+                url: '/updateAffiliation',
+                type: 'PUT',
+                data: body,
+                success: function(response) {
+                    if (response.success){
+                        $('#affiliationText').html = newAffiliation;
+                    } else {
+                        alert("error updating affiliation");
+                    }   
+                }
+                });
+        }
+        // another ajax function to add status update to table and shit
+        $('#affiliation').val('');
+        $('#affiliation').focus();
+    }
+
+    var updateInterest = function() {
+        var interests = $('#interests').val();
+        var body = {
+            interests: interests,
+            username: username
+        };
+        
+        $(document).ready(function() {
+            // send ajax request to add table
+            $.ajax({
+            url: '/updateInterests',
+            type: 'PUT',
+            data: body,
+            success: function(response) {
+                //edit for live update
+                alert("Success: interests updated");
+                
+            },
+            error: function(data) {
+                console.log(data);
+                alert('error adding interests');
+            }
+            })
+        });
+    }
+
+
+    var updateEmail = function() {
+        var newEmail = $('#email').val().trim();
+        var body = {
+            email: newEmail,
+            username: username
+        };
+        if (newEmail !== ''){
+            $.ajax({
+                url: '/updateEmail',
+                type: 'PUT',
+                data: body,
+                success: function(response) {
+                    if (response.success){
+                        $('#emailText').html = newEmail;
+                    } else {
+                        alert("error updating Email");
+                    }   
+                }
+                });
+        }
+        // another ajax function to add status update to table and shit
+        $('#email').val('');
+        $('#email').focus();
+    }
+
+    var updatePassword = function() {
+        var newPassword = $('#password').val().trim();
+        
+        var body = {
+            password: newPassword,
+            username: username
+        };
+        if (newPassword !== ''){
+            $.ajax({
+                url: '/updatePassword',
+                type: 'PUT',
+                data: body,
+                success: function(response) {
+                    alert("Update Profile Picture Success");
+                    $('#message').html = "Update Profile Picture Success";
+                },
+                error: function(data) {
+                    alert('error updating Profile Picture');
+                }
+                });
+        }
+        $('#password').val('');
+        $('#password').focus();
+    }
+
+    var updateProfilePicture = function() {
+        console.log("updateProfilePicture() front end reached");
+        var newProfilePicture = $('#profilePicture').val().trim();
+        var body = {
+            profilePicture: newProfilePicture,
+            username: username
+        };
+        console.log(JSON.stringify(body));
+        if (newProfilePicture !== ''){
+            $.ajax({
+                url: '/updateProfilePicture',
+                type: 'PUT',
+                data: body,
+                success: function(response) {
+                    if (response.success){
+                        alert("Update Profile Picture Success");
+                        $('#message').html = "Update Profile Picture Success";
+                        $('#profilePictureIMG').src = newProfilePicture;
+                    } else {
+                        alert("error updating ProfilePicture");
+                    }   
+                }
+                });
+        }
+        $('#profilePicture').val('');
+        $('#profilePicture').focus();
+    }
+
+    -->
+    </script>
+    <div id="message"></div>
+    <% if (message != null) { %>
+        <%= message %>
+    <% } %>
+    <div id="affiliationText"><%= "Current affiliation: " + affiliation %></div>
+    <form onSubmit="updateAffiliation()">
+        <input type="text" id ="affiliation" name="affiliation" placeholder="Update affiliation...">
+    </form>
+    <br>
+    <form onSubmit="updateInterest()">
+      <select id="interests" class="form-select" aria-label="interests" name="interests" multiple required>
+        <option value="POLITICS">Politics</option>
+        <option value="WELLNESS">Wellness</option>
+        <option value="ENTERTAINMENT">Entertainment</option>
+        <option value="TRAVEL">Travel</option>
+        <option value="STYLE & BEAUTY">Style & Beauty</option>
+        <option value="PARENTING">Parenting</option>
+        <option value="HEALTHY LIVING">Healthy Living</option>
+        <option value="QUEER VOICES">Queer Voices</option>
+        <option value="FOOD & DRINK">Food & Drink</option>
+        <option value="BUSINESS">Business</option>
+        <option value="COMEDY">Comedy</option>
+        <option value="SPORTS">Sports</option>
+        <option value="BLACK VOICES">Black Voices</option>
+        <option value="HOME & LIVING">Home & Living</option>
+        <option value="PARENTS">Parents</option>
+        <option value="THE WORLD POST">The Worldpost</option>
+        <option value="WEDDINGS">Weddings</option>
+        <option value="DIVORCE">Divorce</option>
+        <option value="CRIME">Crime</option>
+        <option value="MEDIA">Media</option>
+        <option value="WEIRD NEWS">Weird News</option>
+        <option value="WORLDPOST">Worldpost</option>
+        <option value="GREEN">Green</option>
+        <option value="IMPACT">Impact</option>
+        <option value="RELIGION">Religion</option>
+        <option value="SCIENCE">Science</option>
+        <option value="TECH">Tech</option>
+        <option value="MONEY">Money</option>
+        <option value="WORLD NEWS">World News</option>
+        <option value="ARTS">Arts</option>
+        <option value="TASTE">Taste</option>
+        <option value="LIVING">Living</option>
+        <option value="CULTURE & ARTS">Culture & Arts</option>
+        <option value="STYLE">Style</option>
+        <option value="ENVIRONMENT">Environment</option>
+        <option value="FIFTY">Fifty</option>
+        <option value="GOOD NEWS">Good News</option>
+        <option value="ARTS & CULTURE">Arts & Culture</option>
+      </select>
+      <br />
+      <input type="submit" value="Update interests">
+    </form>
+    <br>
+    <div id="emailText"><%= "Current email: " + email %></div>
+    <form onSubmit="updateEmail()">
+        <input type="text" id ="email" name="email" placeholder="Update email...">
+    </form>
+    <br>
+    <form onSubmit="updatePassword()">
+        <input type="password" id ="password" name="password" placeholder="Update password...">
+    </form>
+    <br>
+    Curret Profile Picture:
+    <img id="profilePictureIMG" class="img-fluid img-thumbnail" alt="Image" width="150" height="150"
+   src="<%=profilePicture %>"> 
+    <form onSubmit="updateProfilePicture()">
+        <input type="url" id ="profilePicture" name="profilePicture" placeholder="Update profile picture..." required>
+    </form>
+    <hr>
+    <a href="/logout" style="display: block; margin: 0 auto; text-align: right">Log Out</a>
+</body>
+</html>

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Netsbook</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <style type="text/css">
+      .container {
+        font-family: Arial, Verdana, Helvetica, sans-serif;
+        margin: auto;
+        background-color: rgb(223,227,238);
+      }
+      nav ul {
+        list-style: none;
+        display: flex;
+        justify-content: space-between;
+      }
+      nav a {
+        text-decoration: none;
+        color: #000;
+      }
+      table, td, tr, th {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+      th {
+        background-color: #7eaccf;
+        color: white;
+      }
+      .inline-block-child {
+        display: inline-block;
+      }
+      .img {
+        width: 50;
+        height: 50;
+        border-radius: 50%;
+      }
+        
+    </style>
+  </head>
+  <script src="/socket.io/socket.io.js"> </script>
+<script type="text/javascript">
+<!--
+
+var user = '<%= username %>';
+var socket = io(); 
+socket.emit('online', user);
+
+var createStatusUpdate = function(toUser) {
+  $(document).ready(function() {
+    // send ajax request to add table
+
+    $.ajax({
+      url: '/createStatusUpdate',
+      type: 'PUT',
+      data: {
+        ID: (new Date()).getTime(),
+        content: $('#contentInput').val(),
+        date: (new Date()).toLocaleString(),
+        toUser: toUser,
+      },
+      success: function(data) {
+        //edit for live update
+        console.log("createStatusUpdate successful");
+      },
+      error: function(data) {
+        console.log("CreateStatusUpdate failed");
+        alert('error adding post');
+      }
+    })
+  });
+}
+
+var createPost = function(toUser) {
+  $(document).ready(function() {
+    // send ajax request to add table
+
+    $.ajax({
+      url: '/createPost',
+      type: 'PUT',
+      data: {
+        ID: (new Date()).getTime(),
+        content: $('#contentInput').val(),
+        date: (new Date()).toLocaleString(),
+        toUser: toUser,
+      },
+      success: function(data) {
+        //edit for live update
+        console.log(data);
+        console.log("CreatePost successful");
+      },
+      error: function(data) {
+        console.log(data);
+        console.log("CreatePost failed");
+        alert('error adding post');
+      }
+    })
+  });
+}
+
+var addFriend = function(username) {
+  $(document).ready(function() {
+    // send ajax request to add table
+    $.ajax({
+      url: '/addFriend',
+      type: 'PUT',
+      data: {
+        username: username.trim()
+      },
+      success: function(data) {
+        //edit for live update
+        console.log(data);
+      },
+      error: function(data) {
+        console.log(data);
+        alert('error removing user as friend');
+      }
+    })
+  });
+}
+
+var deleteFriend = function(username) {
+  $(document).ready(function() {
+    // send ajax request to delete
+    $.ajax({
+      url: '/deleteFriend',
+      type: 'PUT',
+      data: {
+        username: username.trim()
+      },
+      success: function(data) {
+        //edit for live update
+        console.log(data);
+      },
+      error: function(data) {
+        console.log(data);
+        alert('error deleting user');
+      }
+    })
+  });
+}
+
+var addComment = function(postID) {
+  $(document).ready(function() {
+    // send ajax request to add table
+    $.ajax({
+      url: '/addComment',
+      type: 'PUT',
+      data: {
+        ID: postID,
+        comment: $('#commentInput'+postID).val()
+      },
+      success: function(data) {
+        //edit for live update
+        console.log(data);
+      },
+      error: function(data) {
+        console.log(data);
+        alert('error adding comment');
+      }
+    })
+  });
+}
+    -->
+</script>
+<body class="container">
+  <div style="display: inline-block">
+    <h3 style="font-weight: bold; margin-right: 3px;"><a href="/home">Netsbook</a></h3>
+  </div>
+  <div style="display: inline-block">
+    <form autocomplete = "off">
+      <input id = "searchUserInput" style="border-radius: 10px; border-color: white; margin-right: 780px" type = "text" placeholder = "&#128269;Search">
+      <div id = "autofill"></div>
+    </form>
+  </div>
+  <br/>
+  <nav>
+    <ul>
+      <li style="font-weight: bold"><a href="/profilePage">Profile</a></li>
+      <li style="font-weight: bold"><a href="/news">What's Happening</a></li>
+      <li style="font-weight: bold"><a href="/chat">Message Friends</a></li>
+      <li style="font-weight: bold"><a href="/visualizer">Friend Visualizer</a></li>
+      <li style="font-weight: bold"><a href="/toUpdateUser">Update Profile</a></li>
+    </ul>
+  </nav>
+  <hr />
+  <div style="border: 1px solid black; margin: auto; width: 50%; text-align: center;">
+    <h1>Account Information</h1>
+    <% if (result != null && result.posts != null) { %>
+        <% if (result.ownProfile != null && result.ownProfile) { %>
+            <form onSubmit="createStatusUpdate('<%= result.user.username.S %>')">
+                <h2>Add Status Update</h2>
+                <input class="input-box" id="contentInput" type="text" placeholder="content" name="content" required>
+                <input name = "param" type="hidden" value="<%= result.user.username.S %>">
+                <br />
+                <input style="margin: 10px" type="submit" value="Add Status Update">
+              </form>
+        <% } else if (!result.ownProfile && result.isFriends){ %>
+            <form onSubmit="createPost('<%= result.user.username.S %>')" name = "param">
+                <h2>Add Post</h2>
+                <input class="input-box" id="contentInput" type="text" placeholder="content" name="content" required>
+                <input name = "param" type="hidden" value="<%= result.user.username.S %>">
+                <br />
+                <input style="margin: 10px" type="submit" value="Add Post">
+              </form>
+        <% } %>
+
+        <% if (result.ownProfile != null && result.ownProfile != true) { %>
+            <% if (!result.isFriends) { %>
+            <button id="addFriend" type="button" onClick="addFriend('<%= result.user.username.S %>')">
+                Add <%= result.user.username.S %>
+            </button>
+            <% } else { %>
+            <button id="deleteFriend" type="button" onClick="deleteFriend('<%= result.user.username.S %>')">
+            Delete <%= result.user.username.S %>
+            </button>
+            <% } %>
+        <% } %>
+        <table style="border: 1px solid black; border-collapse: collapse; width: 60%; margin: auto;">
+            <tr>
+                <th>Username: </th>
+                <th>Affiliation: </th>
+                <th>Email: </th>
+                <th>First Name: </th>
+                <th>Last Name: </th>
+            </tr>
+            <tr>
+                <td id = "user"><%= result.user.username.S %></td>
+                <td><%= result.user.affiliation.S %></td>
+                <td><%= result.user.email.S %></td>
+                <td><%= result.user.firstName.S %></td>
+                <td><%= result.user.lastName.S %></td>
+            </tr>
+        </table>
+        <table id="postsTable" style="border: 1px solid black; border-collapse: collapse; width: 60%; margin: auto;">
+            <tr>
+              <th>Type: </th>
+              <th>User: </th>
+              <th>To User: </th>
+              <th>Content: </th>
+              <th>Date: </th>
+              <th>Comments: </th>
+              <th>Commenter: </th>
+              <th>Add a New Comment: </th> 
+            </tr>
+    
+        <% result.posts.forEach(function(post) { %>
+            <tr>
+            <td><%= post.type.S %></td>
+            <td><%= post.user.S %></td>
+            <td><%= post.toUser.S %></td>
+            <td><%= post.content.S %></td>
+            <td><%= post.date.S %></td>
+            <td>
+              <ol>
+              <%if (post.comments != null && post.comments.L.length > 0) { %>
+                <% post.comments.L.forEach(function(comment){ %>
+                  <li><%= comment.S %></li> 
+                <% }); %>
+              <% } %>
+                </ol>
+            </td>
+            <td>
+              <%if (post.commenters != null && post.commenters.L.length > 0) { %>
+                <ol>
+                <% post.commenters.L.forEach(function(commenter){ %>
+                  <li><%= commenter.S %></li>
+                <% }); %>
+                </ol>
+              <% } %>
+            </td>
+            <td>
+                <form onSubmit="addComment('<%= post.ID.N %>')">
+                  <input class="input-box" id="commentInput<%= post.ID.N %>" type="text" placeholder="add comment" name="comment">
+                  <br />
+                  <input style="margin: 10px" type="submit" value="Add comment">
+                </form>
+              </td>
+            </tr>
+        <% }); %>
+        </table>
+    <% } %>
+
+  </div>
+</body>
+</html>

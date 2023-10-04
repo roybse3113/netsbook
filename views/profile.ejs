@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <div style="border: 1px solid black; margin: auto; width: 50%; text-align: center;">
+    <h1>Account Information</h1>
+    <form action="/createaccount" method="post">
+      <%if (message != null) { %>
+        <font color="red"><%= message %><p>
+      <% } %>
+      <input class="input-box" type="text" placeholder="username" name="username" required>
+      <br />
+      <input type="text" placeholder="full name" name="fullname" required>
+      <br />
+      <input class="input-box" type="text" placeholder="email" name="email" required>
+      <br />
+      <input class="input-box" type="text" placeholder="password" name="password" required>
+      <br />
+      <input class="input-box" type="text" placeholder="birthday" name="birthday" required>
+      <br />
+      <input class="input-box" type="text" placeholder="interests (select at least 2)" name="interests" required>
+      <br />
+      <input style="margin: 10px" type="submit" value="Create account">
+    </form>
+    <br />
+    Already have an account? <a href="/">Log in</a>
+    <br />
+  </div>
+</body>
+</html>

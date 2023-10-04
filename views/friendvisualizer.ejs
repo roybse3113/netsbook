@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <style type="text/css">
+    .ourContainer {
+        font-family: Arial, Verdana, Helvetica, sans-serif;
+        margin: auto;
+        background-color: rgb(223,227,238);
+    }
+    nav ul {
+        list-style: none;
+        display: flex;
+        justify-content: space-between;
+    }
+    nav a {
+        text-decoration: none;
+        color: #000;
+    }
+    .inline-block-child {
+          display: inline-block;
+        }
+    </style>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<title>Netsbook Friendship Visualizer</title> 
+
+<!-- CSS Files -->
+<link type="text/css" href="../css/base.css" rel="stylesheet" />
+
+<!--[if IE]><script language="javascript" type="text/javascript" src="../../Extras/excanvas.js"></script><![endif]-->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<!-- JIT Library File -->
+<script language="javascript" type="text/javascript" src="../js/jit.js"></script>
+
+<!-- Example File -->
+<script language="javascript" type="text/javascript" src="../js/friendvisualizer.js"></script>
+</head>
+<body class="ourContainer">
+    <div style="display: inline-block">
+        <h3 style="font-weight: bold"><a href="/home">Netsbook</a></h3>
+      </div>
+      <div style="display: inline-block">
+        <form autocomplete = "off">
+          <input id = "searchUserInput" style="border-radius: 10px; border-color: white;" type = "text" placeholder = "&#128269;Search">
+          <div id = "autofill"></div>
+        </form>
+      </div>
+      <br/>
+      <nav>
+        <ul>
+          <li style="font-weight: bold"><a href="/profilePage">Profile</a></li>
+          <li style="font-weight: bold"><a href="/news">What's Happening</a></li>
+          <li style="font-weight: bold"><a href="/chat">Message Friends</a></li>
+          <li style="font-weight: bold"><a href="/visualizer">Friend Visualizer</a></li>
+          <li style="font-weight: bold"><a href="/toUpdateUser">Update Profile</a></li>
+        </ul>
+      </nav>
+  
+      <hr />
+<div id="container">
+
+<div id="center-container">
+    <div id="infovis"></div>    
+</div>
+
+</div>
+</body>
+</html>

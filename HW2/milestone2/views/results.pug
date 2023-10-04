@@ -1,0 +1,57 @@
+html
+	head
+		title NETS 2120 Homework 2 Milestone 2 - TED Navigator
+		script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js')
+		link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css')
+		link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css')
+		script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js')
+		meta(name='viewport' content='width=device-width, initial-scale=1')
+	body(class="container")
+		div(class = "jumbotron")
+			h1 NETS 2120 Homework 2 Milestone 2 - TED Navigator
+			p1 Top #{results.length} TED talks matching "#{search}"
+		each res in results	
+			table(class="table table-bordered")
+				tr
+					td Title
+					td
+						a(href=res.url) #{res.title}
+				tr 
+					td Speaker
+					td #{res.speaker_1}
+				tr
+					td Link
+					td
+						iframe(src =res.url.replace("www", "embed") title="ted talk") 
+				tr
+					td Social ID
+					td #{res.social_id}
+				tr
+					td Views
+					td #{res.views}
+				tr
+					td Duration
+					td #{res.duration}
+				tr
+					td Description
+					td #{res.description}
+				tr
+					td Topics
+					td 
+						ul(class = "list-group")
+							each topic in res.topics
+								li(class = "list-group-item")
+									a(href='/talks?keyword='+encodeURIComponent(topic)) #{topic}
+									br
+				tr
+					td Related Talks
+					td 
+						div(class = "panel panel-success")
+							each key in Object.keys(res.related_talks)
+								div(class = "panel-heading") Talk ID: #{key}
+								div(class = "panel-body")
+									a(href = 'talk?id=' + key) #{res.related_talks[key]}
+									br
+
+		
+		

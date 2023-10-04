@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Netsbook - log in or sign up</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<style type="text/css">
+  .container {
+    font-family: Arial, Verdana, Helvetica, sans-serif;
+    margin: auto;
+    background-color: rgb(182, 205, 224);
+  }
+  .input-btn {
+      background-color: rgb(191, 223, 253);
+      box-shadow: 2px 2px 2px grey;
+      border: none;
+      font-weight: bold;
+      padding: 7px;
+      border-radius: 4px;
+      margin-top: 5px;
+      color: rgb(255, 255, 255);
+    }
+</style>
+</head>
+<body class="container">
+  <h1><b>Sign Up</b></h1>
+  <h5>It's quick and easy.</h5>
+  <form action="/createaccount" method="post">
+      <%if (message != null) { %>
+        <font color="red"><%= message %><p>
+      <% } %>
+      <div class ="mb-3 row">
+        <label class="col-sm-2 col-form-label">Username</label>
+        <div class="col-sm-5">
+          <input type="text" class="form-control" placeholder="Username" name="username" required>
+        </div>
+      </div>
+      <div class ="mb-3 row">
+        <label class="col-sm-2 col-form-label">Password</label>
+        <div class="col-sm-5">
+          <input type="password" class="form-control" placeholder="Password" name="password" required>
+        </div>
+      </div>
+      <div class ="mb-3 row">
+        <label class="col-sm-2 col-form-label">First Name</label>
+        <div class="col-sm-5">
+          <input type="text" class="form-control"  placeholder="First Name" name="firstName" required>
+        </div>
+      </div>
+      <div class ="mb-3 row">
+            <label class="col-sm-2 col-form-label">Last Name</label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control" placeholder="Last Name" name="lastName" required>
+            </div>
+          </div>
+      <div class ="mb-3 row">
+          <label class="col-sm-2 col-form-label">Email Address</label>
+          <div class="col-sm-5">
+            <input type="text" class="form-control" placeholder="Email" name="email" required>
+          </div>
+        </div>
+      <div class ="mb-3 row">
+          <label class="col-sm-2 col-form-label">Affiliation</label>
+          <div class="col-sm-5">
+            <input type="text" class="form-control" placeholder="Affiliation" name="affiliation" required>
+          </div>
+        </div>
+        <div class ="mb-3 row">
+          <label class="col-sm-2 col-form-label">Birth Month</label>
+          <div class="col-sm-5">
+            <select class="form-select" name="birthMonth">
+              <option value="January">January</option>
+              <option value="February">February</option>
+              <option value="March">March</option>
+              <option value="April">April</option>
+              <option value="May">May</option>
+              <option value="June">June</option>
+              <option value="July">July</option>
+              <option value="August">August</option>
+              <option value="September">September</option>
+              <option value="October">October</option>
+              <option value="November">November</option>
+              <option value="December">December</option>
+          </select>
+          </div>
+        </div>
+        <div class ="mb-3 row">
+          <label class="col-sm-2 col-form-label">Birth Day</label>
+          <div class="col-sm-5">
+            <select class="form-select" name="birthDay">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
+              <option value="12">12</option>
+              <option value="13">13</option>
+              <option value="14">14</option>
+              <option value="15">15</option>
+              <option value="16">16</option>
+              <option value="17">17</option>
+              <option value="18">18</option>
+              <option value="19">19</option>
+              <option value="20">20</option>
+              <option value="21">21</option>
+              <option value="22">22</option>
+              <option value="23">23</option>
+              <option value="24">24</option>
+              <option value="25">25</option>
+              <option value="26">26</option>
+              <option value="27">27</option>
+              <option value="28">28</option>
+              <option value="29">29</option>
+              <option value="30">30</option>
+              <option value="31">31</option>
+          </select>
+          </div>
+        </div>
+        <div class ="mb-3 row">
+          <label class="col-sm-2 col-form-label">Birth Year</label>
+          <div class="col-sm-5">
+            <select class="form-select" name="birthYear">
+              <option value="1970">1970</option>
+              <option value="1971">1971</option>
+              <option value="1972">1972</option>
+              <option value="1973">1973</option>
+              <option value="1974">1974</option>
+              <option value="1975">1975</option>
+              <option value="1976">1976</option>
+              <option value="1977">1977</option>
+              <option value="1978">1978</option>
+              <option value="1979">1979</option>
+              <option value="1980">1980</option>
+              <option value="1981">1981</option>
+              <option value="1982">1982</option>
+              <option value="1983">1983</option>
+              <option value="1984">1984</option>
+              <option value="1985">1985</option>
+              <option value="1986">1986</option>
+              <option value="1987">1987</option>
+              <option value="1988">1988</option>
+              <option value="1989">1989</option>
+              <option value="1990">1990</option>
+              <option value="1991">1991</option>
+              <option value="1992">1992</option>
+              <option value="1993">1993</option>
+              <option value="1994">1994</option>
+              <option value="1995">1995</option>
+              <option value="1996">1996</option>
+              <option value="1997">1997</option>
+              <option value="1998">1998</option>
+              <option value="1999">1999</option>
+              <option value="2000">2000</option>
+              <option value="2001">2001</option>
+              <option value="2002">2002</option>
+              <option value="2003">2003</option>
+              <option value="2004">2004</option>
+              <option value="2005">2005</option>
+              <option value="2006">2006</option>
+              <option value="2007">2007</option>
+              <option value="2008">2008</option>
+              <option value="2009">2009</option>
+          </select>
+          </div>
+        </div>
+
+        <div class ="mb-3 row">
+          <label class="col-sm-2 col-form-label">Interests</label>
+          <div class="col-sm-5">
+            <select class="selectpicker" multiple data-live-search="true" name = "interests" required>
+            <option>Politics</option>
+            <option>Entertainment</option>
+            <option>Travel</option>
+            <option>Wellness</option>
+            <option>Style & Beauty</option>
+            <option>Healthy Living</option>
+            <option>Food & Drink</option>
+            <option>Business</option>
+            <option>Comedy</option>
+            <option>Sports</option>
+            <option>Women</option>
+            <option>Queer Voices</option>
+            <option>Black Voices</option>
+            <option>Latino Voices</option>
+            <option>Home & Living</option>
+            <option>Parents</option>
+            <option>Parenting</option>
+            <option>Weddings</option>
+            <option>Divorce</option>
+            <option>Impact</option>
+            <option>Crime</option>
+            <option>Media</option>
+            <option>Weird News</option>
+            <option>Good News</option>
+            <option>Green</option>
+            <option>The Worldpost</option>
+            <option>Worldpost</option>
+            <option>World News</option>
+            <option>Religion</option>
+            <option>Style</option>
+            <option>Taste</option>
+            <option>Science</option>
+            <option>Tech</option>
+            <option>Money</option>
+            <option>Arts</option>
+            <option>Arts & Culture</option>
+            <option>Environment</option>
+            <option>Fifty</option>
+            <option>Education</option>
+            <option>College</option>
+        </select>
+        </div>
+      </div>
+      <button class="input-btn" type="submit">Sign Up</button>
+    </form>
+    <br />
+    Already have an account? <a href="/">Log in</a>
+    <br />
+  </div>
+</body>
+</html>

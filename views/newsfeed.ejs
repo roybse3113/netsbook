@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Netsbook</title>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <style type="text/css">
+        .container {
+          font-family: Arial, Verdana, Helvetica, sans-serif;
+          margin: auto;
+          background-color: rgb(223,227,238);
+        }
+        nav ul {
+          list-style: none;
+          display: flex;
+          justify-content: space-between;
+        }
+        nav a {
+          text-decoration: none;
+          color: #000;
+        }
+        .inline-block-child {
+          display: inline-block;
+        }
+        .img {
+        width: 50;
+        height: 50;
+        border-radius: 50%;
+      }
+      </style>
+  </head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="/socket.io/socket.io.js"> </script>
+ 
+<script type="text/javascript">
+<!--
+ 
+  var user = <%- JSON.stringify(username) %>
+  var socket = io();
+  socket.emit('online', user);
+ 
+  // var getNews = function() {
+  //   $(document).ready(function() {
+  //     // send ajax request to add table
+  //     $.ajax({
+  //       url: '/news',
+  //       type: 'GET',
+  //       data: {
+  //         username: user
+  //       },
+  //       success: function(data) {
+  //         //edit for live update
+  //         console.log(data);
+  //         data.forEach(function(article) {
+  //           $('#newsFeed').append("<li>" + article.category + ", " + article.headline + "</li>");
+  //         });
+  //       },
+  //       error: function(data) {
+  //         console.log(data);
+  //         alert('error adding news');
+  //       }
+  //     })
+  //   });
+ 
+  // $(document).ready(function() {
+  //   getNews();
+  // });
+ 
+  var addArticle = function(articleLink) {
+  $(document).ready(function() {
+    // send ajax request to add table
+    $.ajax({
+      url: '/likeArticle',
+      type: 'PUT',
+      data: {
+        link: articleLink,
+      },
+      success: function(data) {
+        //edit for live update
+        console.log(data);
+      },
+      error: function(data) {
+        console.log(data);
+        alert('error adding comment');
+      }
+    })
+  });
+}
+ 
+ 
+-->
+</script>
+<body class="container">
+  <div style="display: inline-block">
+    <h3 style="font-weight: bold; margin-right: 3px;"><a href="/home">Netsbook</a></h3>
+  </div>
+  <div style="display: inline-block">
+    <form action="/searchNews" method="get" autocomplete = "off">
+      <input id = "keyword" name="keyword" style="border-radius: 10px; border-color: white; margin-right: 780px" type = "text" placeholder = "&#128269;Search Article">
+    </form>
+  </div>
+  <br/>
+  <nav>
+    <ul>
+      <li style="font-weight: bold"><a href="/profilePage">Profile</a></li>
+      <li style="font-weight: bold"><a href="/news">What's Happening</a></li>
+      <li style="font-weight: bold"><a href="/chat">Message Friends</a></li>
+      <li style="font-weight: bold"><a href="/visualizer">Friend Visualizer</a></li>
+      <li style="font-weight: bold"><a href="/toUpdateUser">Update Profile</a></li>
+    </ul>
+  </nav>
+  <hr />
+  
+  
+  <div style="text-align: center;">
+    <h1> <U>Article Recommendations</U></h1>
+    <br />
+    <div>
+      <%if (result != null && result.length > 0) { %>
+        <% result.forEach(function(article) { %>
+          <%if (article != null) { %>
+          <%if (article.headline != null) { %>
+          <div><h3><%= article.headline.S %></h3></div>
+          <% } %>
+          <%if (article.category != null) { %>
+          <div><h4><%= article.category.S %></h4></div>
+          <% } %>
+          <%if (article.authors != null) { %>
+          <div><%= article.authors.S %>, <%= article.date.S %></div>
+          <% } %>
+          <%if (article.link != null) { %>
+          <div><%= article.link.S %></div>
+          <% } %>
+          <form onSubmit="addArticle('<%= article.link.S %>')">
+            <input style="margin: 10px" type="submit" value="Like">
+          </form>
+          <% } %>
+          <hr />
+        <% }); %>
+      <% } %>
+      <ul id="newsFeed">
+      </ul>
+    </div>
+  </div>
+</body>
+</html>
+ 

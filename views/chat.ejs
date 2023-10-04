@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <title>Netsbook</title>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <style type="text/css">
+        .container {
+          font-family: Arial, Verdana, Helvetica, sans-serif;
+          margin: auto;
+          background-color: rgb(223,227,238);
+        }
+        nav ul {
+          list-style: none;
+          display: flex;
+          justify-content: space-between;
+        }
+        nav a {
+          text-decoration: none;
+          color: #000;
+        }
+        .inline-block-child {
+          display: inline-block;
+        }
+        .img {
+        width: 50;
+        height: 50;
+        border-radius: 50%;
+      }
+      </style>
+  </head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="/socket.io/socket.io.js"> </script>
+<script type="text/javascript">
+ <!--
+const notify = document.querySelector('#notification');
+const message = document.querySelector('#message');
+const button = document.querySelector('button');
+const messageBar = document.querySelector('#message-bar');
+
+var username = <%- JSON.stringify(username) %> 
+var socket = io();
+socket.emit('online', username);
+socket.emit('currUser', {currUser: username});
+$(document).ready(function() {
+  socket.on('invite user', function(obj){
+    console.log("Client: invite user message received by " + username);
+    alert(obj.requester + " invited you to join a chat room!");
+    // html change not working
+    
+    var tempMessage = document.createElement("li");
+    tempMessage.appendChild(document.createTextNode("Chat Room Invite by " + 
+    obj.requester));
+    
+    // Create form that will allow user to join room
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = '/joinChat';
+    const formInput = document.createElement('input');
+    formInput.type = 'text';
+    formInput.name = 'roomID';
+    formInput.value = obj.room;
+    formInput.style.display = 'none';
+    
+    const button = document.createElement('button');
+    button.type = 'submit';
+    button.innerText = "Join " + obj.requester + "'s room";
+
+    form.appendChild(formInput);
+    form.appendChild(button);
+    tempMessage.appendChild(form);
+    $('#notification').append(tempMessage);
+    //notify.innerHTML = obj.requester + " invited you to join a chat room!";
+    //messageBar.style.backgroundColor = '#3F4E4F';
+  });
+});
+
+
+console.log(socket);
+// get the user's ID or username and store in user
+// Ajax request to get username or session's username?
+var ajaxCreateChat = function(invited_username) {
+  $(document).ready(function() {
+    // send ajax request to add table 
+    $.ajax({
+      url: '/createChat',
+      type: 'PUT',
+      data: {
+        invited: invited_username
+      },
+      success: function(data) {
+        //edit for live update
+        console.log("createChat success")
+      },
+      error: function(data) {
+        console.log(data);
+        alert('error creating chat room');
+      }
+    })
+  });
+}
+
+var joinChat = function(){
+  window.location.href = "/joinChat";
+}
+-->
+</script>
+<body class="container">
+  <div style="display: inline-block">
+    <h3 style="font-weight: bold; margin-right: 3px;"><a href="/home">Netsbook</a></h3>
+  </div>
+  <div style="display: inline-block">
+    <form autocomplete = "off">
+      <input id = "searchUserInput" style="border-radius: 10px; border-color: white; margin-right: 780px" type = "text" placeholder = "&#128269;Search">
+      <div id = "autofill"></div>
+    </form>
+  </div>
+  <br/>
+  <nav>
+    <ul>
+      <li style="font-weight: bold"><a href="/profilePage">Profile</a></li>
+      <li style="font-weight: bold"><a href="/news">What's Happening</a></li>
+      <li style="font-weight: bold"><a href="/chat">Message Friends</a></li>
+      <li style="font-weight: bold"><a href="/visualizer">Friend Visualizer</a></li>
+      <li style="font-weight: bold"><a href="/toUpdateUser">Update Profile</a></li>
+    </ul>
+  </nav>
+  <hr>
+  <ul id ="notification"></ul>
+  <div id="message-bar"></div>
+  <h1><%= username  %></h1>
+
+  </div>
+  <h1> Rooms </h1>
+    <table id="roomsTable" style="border: 1px solid black; border-collapse: collapse; width: 60%; margin: auto;">
+        <%if (rooms != null) { %>
+            <% rooms.forEach(function(room) { %>
+              <%= room.room_id.N  %> :
+              <% room.users_list.L.forEach(function(user) { %>
+                <%= user.S,  %>
+             <% } ) %>
+              <!-- <input type="button" value="<%= room.N %>" onclick="joinChat()"> -->
+              <form action="/joinChat" method="post">
+                <input style="display:none;" id="roomID" name="roomID" value="<%= room.room_id.N %>">
+                <input style="margin: 10px" type="submit" value="Join Room">
+            </form>
+            <br>
+            <% } )%>
+        <% }%>
+    </table>
+    <h1> Friends</h1>
+    <table id="friendsTable" style="border: 1px solid black; border-collapse: collapse; width: 60%; margin: auto;">
+        <%if (friends != null) { %>
+            <% friends.forEach(function(friend){ %>
+                <form action="/createChat" method="post">
+                  <%= friend.S %>
+                  <input style="display:none;" id="invited" name="invited" value="<%= friend.S %>">
+                  <input style="margin: 10px" type="submit" value="Invite">
+                </form>
+      <br />
+                <% } )%>
+        <% }%>
+    </table>
+
+</body>
+</html>

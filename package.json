@@ -1,0 +1,22 @@
+{
+   "name": "HW4",
+   "description": "Restaurant database",
+   "version": "0.0.1",
+   "scripts": {
+      "start": "node app.js"
+   },
+   "dependencies": {
+      "async": "*",
+      "aws-sdk": "*",
+      "crypto-js": "^4.1.1",
+      "ejs": "*",
+      "express": "*",
+      "express-session": "^1.17.3",
+      "lru-cache": "*",
+      "socket.io": "^4.5.4",
+      "stemmer": "^1.0.5"
+   },
+   "devDependencies": {
+      "@types/stemmer": "^2.0.0"
+   }
+}
